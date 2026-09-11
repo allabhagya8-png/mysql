@@ -1,0 +1,158 @@
+                                                                                DAY - 6(SQL)
+=======================DCL COMMANDS============================
+DATA CONTROL LANGUAGE 
+--> DCL COMMANDS ARE USED TO CONTROL ACCESS TO DATA IN THE DATA BASE - MAINLY TO GRANT OR REVOKE PRIVILEGES TO USERS.
+====================================
+COMMAND        |      DESCRIPTION
+===============|====================
+               |
+    GRANT      |
+               |
+    REVOKE     |
+               |
+====================================
+
+COMMAND PRIVILAGES:-
+=======================
+*SELECT=READ DATA
+*INSERT=INSERT DATA
+*UPDATE=MODIFY DATA
+*DELETE=REMOVE DATA
+*ALL PRIVILEGES = FULL ACCESS
+
+
+USER CREATION
+==================
+
+(CREATE USER"USERNAME"IDENTIFIED BY"PASSWORD")
+
+--> GRANT :- GRANT PRIVILAGE ON TABLE_NAME TO"USERNAME"
+
+=> REVOKE:- REVOKE PRIVILAGE ON TABLE_NAME FROM"USERNAME"
+
+
+
+
+
+  PROGRAM FOR DCL
+===============================
+
+mysql> create database da6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use da6;
+Database changed
+mysql> create table students(
+    -> sno int primary key,
+    -> sname varchar(30),
+    -> semail varchar(20)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into students values(111,'bhagya','bhagi@codegnan');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select* from students;
++-----+--------+----------------+
+| sno | sname  | semail         |
++-----+--------+----------------+
+| 111 | bhagya | bhagi@codegnan |
++-----+--------+----------------+
+1 row in set (0.00 sec)
+
+mysql> create user"bhagya" identified by "bhagi@21";
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create user "sneha" identified by "sneha@21";
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant select,insert,update on students to sneha;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant select,drop on students to bhagi;
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> grant select,drop on students to bhagya;
+Query OK, 0 rows affected (0.01 sec)
+======AUTO INCREMENT============
+ CREATE TABLE EMPLOYEES(
+    -> EMP_ID INT AUTO_INCREMENT PRIMARY KEY,
+    -> ENAME VARCHAR(30),
+    -> ESAL DECIMAL(10,2)
+    -> );
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO EMPLOYEES(ENAME,ESAL) VALUES ('MALLI',2000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT* FROM EMPLOYEES;
++--------+-------+---------+
+| EMP_ID | ENAME | ESAL    |
++--------+-------+---------+
+|      1 | MALLI | 2000.00 |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(ENAME,ESAL) VALUES ('MANI',4000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT* FROM EMPLOYEES;
++--------+-------+---------+
+| EMP_ID | ENAME | ESAL    |
++--------+-------+---------+
+|      1 | MALLI | 2000.00 |
+|      2 | MANI  | 4000.00 |
++--------+-------+---------+
+
+===========CREATE TABLE BY USING ANOTHER TABLE==============
+mysql> CREATE TABLE BACKUPEMPLOYEES AS
+    -> SELECT* FROM EMPLOYEES;
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_da6   |
++-----------------+
+| backupemployees |
+| emp             |
+| employees       |
+| students        |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT* FROM BACKUPEMPLOYEES;
++--------+-------+---------+
+| EMP_ID | ENAME | ESAL    |
++--------+-------+---------+
+|      1 | MALLI | 2000.00 |
+|      2 | MANI  | 4000.00 |
++--------+-------+---------+
+2 rows in set (0.00 sec)
+================= COMPUTED COLUMNS================
+
+CREATE TABLE PRODUCTS(
+    -> PRODUCTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PNAME VARCHAR(30),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2)GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO PRODUCTS(PNAME,PRICE,QUANTITY)VALUES
+    -> ('MOBILE',19977.99,2);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT* FROM PRODUCTS;
++-----------+--------+----------+----------+-------------+
+| PRODUCTID | PNAME  | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+--------+----------+----------+-------------+
+|         1 | MOBILE | 19977.99 |        2 |    39955.98 |
++-----------+--------+----------+----------+-------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
